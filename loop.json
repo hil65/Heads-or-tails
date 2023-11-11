@@ -1,0 +1,33 @@
+let runner = acode.require("code.runner");
+
+// Function Handler
+runner.addHandler({
+  name: "python", extension: "py",
+  match: "*.py", handler(file) {
+    if (useIpython) {
+      return `cd $dir && ipython ${file.name}`
+    } else {
+      return `cd $dir && python ${file.name}`
+    }
+  }
+})
+
+// String handler
+runner.addHandler({
+  name: "javascript",
+  extension: "js",
+  command: "node $path"
+})
+
+// Remove handlers.
+runner.removeHandler("javascipt");
+
+runner.addHandler({
+  name: "NPM",
+  match(file) {
+    return file.name == "package.json";
+  },
+  handler(file) {
+    return "npm run"
+  }
+})
